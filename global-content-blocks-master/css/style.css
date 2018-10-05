@@ -1,0 +1,19 @@
+div.gcb_master_container {
+	width: 100%; 
+	float: left;  
+	position: relative;
+}
+div.gcb_container_2column {
+	width: 46%; 
+	padding: 4px;
+	background-color: #abada6;
+	float: left;  
+	position: relative;
+}
+div.gcb_container_3column {
+	width: 30%;
+	padding: 4px;
+	background-color: #abada6;
+	float: left;  
+	position: relative;
+}
