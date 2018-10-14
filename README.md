@@ -16,7 +16,7 @@ The second issue with the plugin is, that it saves the data into the options tab
 
 2. I have created a custom post type and rewritten the code, so the code block inserted by the user (including possible HTML markup) is converted to a format that can be safely saved as a custom post type content. A function has been created to converted back the post into useable code on the init hook (```gcb_retrieveSavedRecords()``` on line 272 of the *global-content-blocks.php* file. This function retrieves the saved data from the custom post type table, converts it and then updates the options table with the data. I have tested the functionality although further testing might be necessary.
 
-![Screenshot of Code Update: New Custom Post Type and Update for the Save function](/blob/master/global-content-blocks-master/screenshots/newPostTypeAndSave.png?raw=true "New Custom Post type and updated save function")
+![Screenshot of Code Update: New Custom Post Type and Update for the Save function](/global-content-blocks-master/screenshots/newPostTypeAndSave.png?raw=true "New Custom Post type and updated save function")
 
 ## Test
 
