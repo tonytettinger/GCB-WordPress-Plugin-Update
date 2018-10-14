@@ -14,8 +14,11 @@ The second issue with the plugin is, that it saves the data into the options tab
 
 1. I have added nonce creation and verification functions for the update function.
 
-2. I have created a custom post type and revwritten the code, so the code (including possible HTML markup) is converted to a format that can be safely saved as a custom post type content. A function has been created to converted back the post into useable code on the init hook. This function retrieves the saved data from the custom post type table, converts it and then updates the options table with the data. I have tested the functionality although further testing might be necessary.
+2. I have created a custom post type and rewritten the code, so the code block inserted by the user (including possible HTML markup) is converted to a format that can be safely saved as a custom post type content. A function has been created to converted back the post into useable code on the init hook (```gcb_retrieveSavedRecords()``` on line 272 of the *global-content-blocks.php* file. This function retrieves the saved data from the custom post type table, converts it and then updates the options table with the data. I have tested the functionality although further testing might be necessary.
 
+## Test
+
+To test the updated plugin, please download the *global-content-blocks-master* directory to the WordPress plugin directory, activate the plugin from the dashboard, add custom shortcodes under the Global Content Blocks menu and test it by adding custom blocks to a post.
 
 
 
