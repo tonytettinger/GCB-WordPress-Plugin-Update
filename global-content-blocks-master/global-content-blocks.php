@@ -179,7 +179,7 @@ function create_posttype() {
 register_post_type( 'gcb_post', array());
 }
 
-/*this function has been modified to store record in the new custom post type
+/*this function has been modified to store the shortcode information in the new custom post type
 and also a added nonce key verification for Cross-Site Request Forgery protection*/
 
 function gcb_saverecord() {
@@ -188,7 +188,9 @@ function gcb_saverecord() {
 			// This nonce is not valid.
 			die( 'Security issue: Sorry, there is an issue verifying your security credentials. Please contact the support team.' );
 		} else {
-			//WS stand for with white space
+			/*WS stand for with white space.
+			Converting whitespace to Non-Breaking-Space so it can be saved in a custom post type as text and
+			keep the format*/
 			$nameWS = (htmlspecialchars($_POST['gcb_name']));
 			$name = str_replace(' ', '&nbsp;', $nameWS);
 			$valueWS = ($_POST['gcbvalue']);
@@ -209,7 +211,7 @@ function gcb_saverecord() {
 			);
 
 		if(strlen($name) && strlen($value)) {
-			
+			//in case of entry already exist verify and update
 			if(isset($_POST["update_it"])) {					 
 
 				$args = array('post_type'  => 'gcb_post');
@@ -218,13 +220,11 @@ function gcb_saverecord() {
 	
 				if ( $posts ) {
 				foreach ( $posts as $post ) {
-				
 				$customPost = $post -> post_content;
 				//posts are converted back to an array and values are assigned using the original function
 				$customPostData = explode(' ', $customPost);
 				$post_gcbId = $customPostData[5];
-				
-				
+				//if the post with the given ID is found, convert the data into a string and update it
 				if($post_gcbId == $updateId){
 				$gcbId = $post -> ID;
 				$entry_data_as_string = $name . " ". $description . " " . $value. " " . $custom_id . " " . $type . " " . $post_gcbId;
@@ -240,11 +240,12 @@ function gcb_saverecord() {
 					}
 					$msg = "Entry updated.";
 				}
-				
 			}
 			else {          
+				//the add_entry function returns the assigned ID
 				$gcbId = gcb::add_entry($entry_data);
-				$entry_data['gcbId'] = $gcbId;	
+				$entry_data['gcbId'] = $gcbId;
+				//use this id to keep track of the this entry, save it to the string that will be stored in the custom post	
 				$entry_data_as_string = $name . " ". $description . " " . $value. " " . $custom_id . " " . $type . " " . $gcbId;
 			
 				$my_post = array(
@@ -254,7 +255,7 @@ function gcb_saverecord() {
 				'post_author'   => 1,
 				'post_type'   => 'gcb_post'
 				);         
-				
+				//insert the post content in the new custom post type
 				wp_insert_post($my_post);				
 					$msg = "Entry inserted.";
 				}
@@ -285,8 +286,6 @@ function gcb_retrieveSavedRecords() {
 			$customPost = $post -> post_content;
 		//posts are converted back to an array and values are assigned using the original function
 			$customPostData = explode(' ', $customPost);
-			
-
 			$name = $customPostData[0];
 			$description = $customPostData[1];
 			$value= str_replace('&nbsp;',' ', $customPostData[2]);
@@ -302,8 +301,6 @@ function gcb_retrieveSavedRecords() {
 				"gcbId"		=> $gcbId
 			);
 				gcb::add_entry_second($entry_data, $gcbId);
-		
-
 		}
             wp_reset_postdata();
 	}
